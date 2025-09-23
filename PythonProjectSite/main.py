@@ -12,6 +12,9 @@ def index():
 @app.route('/connect_me')
 def connect():
     return render_template('connect_me.html')
+@app.route('/documents')
+def connect():
+    return render_template('documents.html')
 # @app.route('/login')
 # def login():
 #     return render_template('login.html')
