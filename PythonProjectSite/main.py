@@ -1,6 +1,5 @@
 from flask import render_template
 from flask import Flask
-from flask_login import LoginManager
 
 app = Flask(__name__)
 # app.config['SECRET_KEY'] = 'ght' # Замените на надежный ключ
