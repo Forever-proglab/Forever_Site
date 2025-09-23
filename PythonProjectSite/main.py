@@ -13,7 +13,7 @@ def index():
 def connect():
     return render_template('connect_me.html')
 @app.route('/documents')
-def connect():
+def documents():
     return render_template('documents.html')
 # @app.route('/login')
 # def login():
