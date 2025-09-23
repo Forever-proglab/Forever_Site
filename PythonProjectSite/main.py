@@ -1,9 +1,4 @@
-import re
-from random import randint
-from datetime import datetime, timedelta
-from flask import Flask, render_template, request, url_for, redirect, jsonify
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
-from flask_register import *
+from flask import render_template
 from flask import Flask
 from flask_login import LoginManager
 
