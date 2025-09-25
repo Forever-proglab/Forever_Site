@@ -1,11 +1,11 @@
-from flask import render_template
+from flask import render_template, url_for
 from flask import Flask
-
+from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
-# app.config['SECRET_KEY'] = 'ght' # Замените на надежный ключ
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
 # login_manager = LoginManager()
 # login_manager.init_app(app)
-
+db=SQLAlchemy(app)
 @app.route('/')
 def index():
     return render_template('index.html')
