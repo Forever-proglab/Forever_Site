@@ -1,11 +1,23 @@
+from email.policy import default
+
 from flask import render_template, url_for
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
 # login_manager = LoginManager()
 # login_manager.init_app(app)
 db=SQLAlchemy(app)
+
+class Article(db.Model):
+    id = db.Column(db.Integer, primary_key = True, nullable = False)
+    title = db.Column(db.String(100), primary_key=True, nullable=False)
+    intro = db.Column(db.String(300), primary_key=True, nullable=False)
+    text = db.Column(db.Text, primary_key=True, nullable=False)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+    def __repr__(self):
+        return '<Article %r>' % self.id
 @app.route('/')
 def index():
     return render_template('index.html')
