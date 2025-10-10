@@ -1,3 +1,4 @@
+import random
 import re
 import bcrypt
 from random import randint
@@ -5,7 +6,7 @@ from datetime import datetime, timedelta
 from flask import Flask, render_template, request, url_for, redirect, jsonify
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from flask_register import *
-
+cube_face = 0
 
 # def hashed_password(plain_text_password):
 #     # Мы добавляем "соль" к нашему пароль, чтобы сделать его декодирование невозможным
@@ -66,6 +67,10 @@ def connect():
 @app.route('/documents')
 def documents():
     return render_template('documents.html')
+@app.route('/dice_and_other_randthings')
+def documents():
+    cube_face = random.randint(1,6)
+    return render_template('dice_and_other_randthings.html', count = cube_face)
 # @app.route('/login')
 # def login():
 #     return render_template('login.html')
