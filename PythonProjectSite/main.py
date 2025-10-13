@@ -58,9 +58,34 @@ app.config.update(
 #     return render_template('register.html')
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    random_number = None
+    error = None
+    min_val = 1
+    max_val = 100
+
+    if request.method == 'POST':
+        try:
+            # Получаем числа из формы
+            min_str = request.form['min_number']
+            max_str = request.form['max_number']
+
+            # Проверяем, что введенные значения - числа
+            if not min_str.isdigit() or not max_str.isdigit():
+                error = "Пожалуйста, введите только целые числа."
+            else:
+                min_val = int(min_str)
+                max_val = int(max_str)
+
+                # Генерируем случайное число
+                random_number = random.randint(min_val, max_val)
+        except KeyError:
+            error = "Произошла ошибка при получении данных формы."
+        except ValueError:
+            error = "Произошла ошибка при преобразовании чисел, -18 меньше, чем -12, 6 меньше, чем 28."
+
+    return render_template('index.html', random_number=random_number, error=error)
 @app.route('/connect_me')
 def connect():
     return render_template('connect_me.html')

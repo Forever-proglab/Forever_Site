@@ -14,5 +14,20 @@
         <li><a href="/connect_me"> my accounts</a> </li>
         <li><a href="/documents"> documents</a> </li>
     </ul>
+    <form method="post">
+        <label for="min_number">Минимальное число:</label>
+        <input type="number" id="min_number" name="min_number" required>
+
+        <label for="max_number">Максимальное число:</label>
+        <input type="number" id="max_number" name="max_number" required>
+
+        <button type="submit">Сгенерировать</button>
+    </form>
+
+    {% if random_number %}
+        <p>Ваше случайное число: {{ random_number }}</p>
+    {% elif error %}
+        <p style="color: red;">Ошибка: {{ error }}</p>
+    {% endif %}
 </body>
 </html>
