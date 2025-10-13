@@ -67,17 +67,6 @@ def connect():
 @app.route('/documents')
 def documents():
     return render_template('documents.html')
-@app.route('/dice_and_other_randthings', methods=['GET', 'POST'])
-def documents():
-    if request.method == 'POST':
-        try:
-            min_val = int(request.form.get('min'))
-            max_val = int(request.form.get('max'))
-            random_number = random.randint(min_val, max_val)
-            return render_template('dice_and_other_randthings.html', result=random_number)
-        except ValueError:
-            return render_template('dice_and_other_randthings.html', error="Введите целые числа")
-    return render_template('dice_and_other_randthings.html')
 # @app.route('/login')
 # def login():
 #     return render_template('login.html')
