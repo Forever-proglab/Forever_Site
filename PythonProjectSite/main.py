@@ -60,32 +60,24 @@ app.config.update(
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    random_number = None
+    result = None
     error = None
-    min_val = 1
-    max_val = 100
 
     if request.method == 'POST':
         try:
             # Получаем числа из формы
-            min_str = request.form['min_number']
-            max_str = request.form['max_number']
+            min = float(request.form['min_number'])
+            max = float(request.form['max_number'])
 
             # Проверяем, что введенные значения - числа
-            if not min_str.isdigit() or not max_str.isdigit():
-                error = "Пожалуйста, введите только целые числа."
-            else:
-                min_val = int(min_str)
-                max_val = int(max_str)
 
-                # Генерируем случайное число
-                random_number = random.randint(min_val, max_val)
+            result = round(random.uniform(min, max), 4)
         except KeyError:
             error = "Произошла ошибка при получении данных формы."
         except ValueError:
             error = "Произошла ошибка при преобразовании чисел, -18 меньше, чем -12, 6 меньше, чем 28."
 
-    return render_template('index.html', random_number=random_number, error=error)
+    return render_template('index.html', random_number=result, error=error)
 @app.route('/connect_me')
 def connect():
     return render_template('connect_me.html')
