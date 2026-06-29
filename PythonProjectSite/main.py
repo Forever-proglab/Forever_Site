@@ -72,7 +72,7 @@ def index():
 
             # Проверяем, что введенные значения - числа
 
-            result = round(random.uniform(min, max), 0)
+            result = round((random.uniform(min, max)), n)
         except KeyError:
             error = "Произошла ошибка при получении данных формы."
         except ValueError:
