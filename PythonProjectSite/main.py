@@ -95,7 +95,7 @@ def documents():
 def education():
     return render_template('education.html')
 @app.route('/guesstime')
-def education():
+def guesstime():
     return render_template('guesstime.html')
 
 
