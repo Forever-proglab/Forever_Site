@@ -68,6 +68,7 @@ def index():
             # Получаем числа из формы
             min = float(request.form['min_number'])
             max = float(request.form['max_number'])
+            n = float(request.form['n'])
 
             # Проверяем, что введенные значения - числа
 
