@@ -94,6 +94,10 @@ def documents():
 @app.route('/education')
 def education():
     return render_template('education.html')
+@app.route('/guesstime')
+def education():
+    return render_template('guesstime.html')
+
 
 # @app.route('/login', methods=['GET', 'POST'])
 # def login():
