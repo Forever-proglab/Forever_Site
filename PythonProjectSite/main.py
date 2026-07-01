@@ -1,5 +1,7 @@
 import random
+import time
 import re
+
 import bcrypt
 from random import randint
 from datetime import datetime, timedelta
@@ -96,7 +98,9 @@ def education():
     return render_template('education.html')
 @app.route('/guesstime')
 def guesstime():
-    return render_template('guesstime.html')
+    t = time.time()
+    th = time.ctime(t)
+    return render_template('guesstime.html', curtime=th)
 
 
 # @app.route('/login', methods=['GET', 'POST'])
