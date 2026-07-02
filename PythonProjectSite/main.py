@@ -98,7 +98,7 @@ def education():
     return render_template('education.html')
 @app.route('/guesstime')
 def guesstime():
-    return render_template('guesstime.html', curtime=th)
+    return render_template('guesstime.html')
 
 
 # @app.route('/login', methods=['GET', 'POST'])
