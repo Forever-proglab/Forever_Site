@@ -96,9 +96,16 @@ def documents():
 @app.route('/education')
 def education():
     return render_template('education.html')
-@app.route('/guesstime')
+@app.route('/guesstime', methods=['GET', 'POST'])
 def guesstime():
-    return render_template('guesstime.html')
+    t4 = None
+    if request.method == 'POST':
+        s = int(request.form['s'])
+        t1 = time.time()
+        s1 = int(request.form['s1'])
+        t2 = time.time()
+        t4 = t2-t1
+    return render_template('guesstime.html', time=t4)
 
 
 # @app.route('/login', methods=['GET', 'POST'])

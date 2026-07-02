@@ -9,6 +9,16 @@
         <li><a href="/education">education</a> </li>
         <li><a href="/">main page</a> </li>
 </ul>
+    <form method="post">
+        <label for="s">Наименьшее число:</label>
+        <input type="number" id="s" name="s" required>
+        <label for="s1">Наибольшее число:</label>
+        <input type="number" id="s1" name="s1" required>
+        <button type="submit">Создать_число</button>
+    </form>
 
+    {% if time %}
+        <p>Ваше случайное число: {{ time }}</p>
+    {% endif %}
 </body>
 </html>
