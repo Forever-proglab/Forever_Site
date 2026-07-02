@@ -98,8 +98,6 @@ def education():
     return render_template('education.html')
 @app.route('/guesstime')
 def guesstime():
-    t = time.time()
-    th = time.ctime(t)
     return render_template('guesstime.html', curtime=th)
 
 
