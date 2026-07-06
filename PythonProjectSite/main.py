@@ -101,9 +101,15 @@ def guesstime():
     t4 = None
     if request.method == 'POST':
         s = int(request.form['s'])
-        t1 = time.time()
+        if s == 1:
+            t1 = time.time()
+        else:
+            t1 = 0
         s1 = int(request.form['s1'])
-        t2 = time.time()
+        if s1 == 1:
+            t2 = time.time()
+        else:
+            t2 = 0
         t4 = t2-t1
     return render_template('guesstime.html', time=t4)
 
