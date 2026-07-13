@@ -98,20 +98,20 @@ def education():
     return render_template('education.html')
 @app.route('/guesstime', methods=['GET', 'POST'])
 def guesstime():
-    t4 = None
-    if request.method == 'POST':
-        s = int(request.form['s'])
-        if s == 1:
-            t1 = s
-        else:
-            t1 = 0
-        s1 = int(request.form['s1'])
-        if s1 == 1:
-            t2 = s1
-        else:
-            t2 = 0
-        t4 = t2-t1
-    return render_template('guesstime.html', time=t4)
+    # t4 = None
+    # if request.method == 'POST':
+    #     s = int(request.form['s'])
+    #     if s == 1:
+    #         t1 = s
+    #     else:
+    #         t1 = 0
+    #     s1 = int(request.form['s1'])
+    #     if s1 == 1:
+    #         t2 = s1
+    #     else:
+    #         t2 = 0
+    #     t4 = t2-t1
+    return render_template('guesstime.html')
 
 
 # @app.route('/login', methods=['GET', 'POST'])

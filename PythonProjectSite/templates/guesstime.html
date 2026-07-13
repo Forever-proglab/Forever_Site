@@ -1,25 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Игра: замер времени</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 40px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+        #result { margin-top: 20px; font-size: 24px; font-weight: bold; }
+    </style>
 </head>
-<body style="background-color:Silver">
-<ul>
-        <li><a href="/education">education</a> </li>
-        <li><a href="/">main page</a> </li>
-</ul>
-    <form method="post">
-        <label for="s">Наименьшее число:</label>
-        <input type="number" id="s" name="s" required>
-        <button type="submit">Создать_число</button>
-        <label for="s1">Наибольшее число:</label>
-        <input type="number" id="s1" name="s1" required>
-        <button type="submit">Создать_число</button>
-    </form>
+<body>
+    <h1>Игра: замерь время между нажатиями</h1>
+    <p>Нажми кнопку дважды: первый раз — старт, второй — стоп.</p>
 
-    {% if time %}
-        <p>Ваше случайное число: {{ time }}</p>
-    {% endif %}
+    <button id="timer-btn">Нажми меня!</button>
+    <div id="result"></div>
+    <ul>
+        <li><a href="/">main page</a> </li>
+    </ul>
+
+    <script>
+        const btn = document.getElementById('timer-btn');
+        const resultEl = document.getElementById('result');
+
+        let startTime = null;
+        let isRunning = false;
+
+        btn.addEventListener('click', () => {
+            const now = performance.now(); // более точное время в миллисекундах
+
+            if (!isRunning) {
+                // Первое нажатие: старт
+                startTime = now;
+                isRunning = true;
+                n = now - startTime
+                resultEl.textContent = 'Секунды: ${n} ';
+                btn.textContent = 'Нажми, чтобы остановить';
+            } else {
+                // Второе нажатие: стоп
+                const elapsedMs = now - startTime;
+                const seconds = elapsedMs / 1000;
+                resultEl.textContent = `Время между нажатиями: ${seconds.toFixed(2)} сек.`;
+
+                // Сброс для следующей попытки (опционально)
+                isRunning = false;
+                startTime = null;
+                btn.textContent = 'Нажми меня!';
+            }
+        });
+    </script>
 </body>
 </html>
