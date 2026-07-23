@@ -15,6 +15,7 @@
 
     <button id="timer-btn">Нажми меня!</button>
     <div id="result"></div>
+    <div id="time"></div>
     <ul>
         <li><a href="/">main page</a> </li>
     </ul>
@@ -34,9 +35,8 @@
                 // Первое нажатие: старт
                 startTime = now;
                 isRunning = true;
-                const n = now - startTime
-                tim.textContent = 'Секунды: ${n} ';
-<!--                btn.textContent = 'Нажми, чтобы остановить';-->
+                const n = now - startTime;
+                btn.textContent = 'Нажми, чтобы остановить';
             } else {
                 // Второе нажатие: стоп
                 const elapsedMs = now - startTime;
