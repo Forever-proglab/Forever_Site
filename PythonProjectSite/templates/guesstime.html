@@ -6,44 +6,42 @@
 </head>
 <body>
     <h1>Игра: замерь время между нажатиями</h1>
-    <p>Нажми кнопку дважды: первый раз—старт, второй—стоп.</p>
-
-    <button id="timer-btn">Нажми меня!</button>
-    <div id="result"></div>
-    <div id="time"></div>
+    <p>Время: <span id="time-display">0</span> с</p>
+  <button id="start-btn">Старт</button>
+  <button id="stop-btn">Стоп</button>
+  <button id="clear-btn">Сбросить таймер на ноль</button>
     <ul>
         <li><a href="/">main page</a> </li>
     </ul>
 
     <script>
-        const btn = document.getElementById('timer-btn');
-        const resultEl = document.getElementById('result');
-        const tim = document.getElementById('time');
+        const timeDisplay = document.getElementById('time-display');
+const startBtn = document.getElementById('start-btn');
+const stopBtn = document.getElementById('stop-btn');
+const clearBtn = document.getElementById('clear-btn');
 
-        let startTime = null;
-        let isRunning = false;
+let startTime, timerId;
+let isRunning = false;
 
-        btn.addEventListener('click', () => {
-            const now = performance.now(); // более точное время в миллисекундах
+startBtn.addEventListener('click', () => {
+  if (isRunning) return;
+  isRunning = true;
+  startTime = performance.now();
+  clearInterval(timerId);
+  timerId = setInterval(() => {
+    const elapsed = ((performance.now() - startTime)/1000);
+    timeDisplay.textContent = elapsed.toFixed(2);
+  },);
+});
 
-            if (!isRunning) {
-                // Первое нажатие: старт
-                startTime = now;
-                isRunning = true;
-                const n = now - startTime;
-                btn.textContent = 'Нажми, чтобы остановить';
-            } else {
-                // Второе нажатие: стоп
-                const elapsedMs = now - startTime;
-                const seconds = elapsedMs / 1000;
-                resultEl.textContent = `Время между нажатиями: ${seconds.toFixed(4)} сек.`;
-
-                // Сброс для следующей попытки (опционально)
-                isRunning = false;
-                startTime = null;
-                btn.textContent = 'Нажми меня!';
-            }
-        });
+stopBtn.addEventListener('click', () => {
+  isRunning = false;
+  clearInterval(timerId);
+});
+clearBtn.addEventListener('click', () => {
+  isRunning = false;
+  timeDisplay.textContent=0;
+});
     </script>
 </body>
 </html>
