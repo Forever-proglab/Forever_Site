@@ -6,11 +6,8 @@ from random import randint
 from datetime import datetime, timedelta
 from flask import Flask, render_template, request, url_for, redirect, jsonify
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
-from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
-
+from flask_register import *
+from sqlalchemy import *
 
 # def hashed_password(plain_text_password):
 #     # Мы добавляем "соль" к нашему пароль, чтобы сделать его декодирование невозможным
