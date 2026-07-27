@@ -110,7 +110,12 @@ def choosegame():
     #         t2 = 0
     #     t4 = t2-t1
     return render_template('choosegame.html')
-
+@app.route('/guesstime')
+def guesstime():
+    return render_template('guesstime.html')
+@app.route('/entertime')
+def entertime():
+    return render_template('entertime.html')
 
 # @app.route('/login', methods=['GET', 'POST'])
 # def login():
