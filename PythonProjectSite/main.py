@@ -113,7 +113,7 @@ def choosegame():
 @app.route('/guesstime')
 def guesstime():
     return render_template('guesstime.html')
-@app.route('/entertime')
+@app.route('/entertime',methods=['GET','POST'])
 def entertime():
     return render_template('entertime.html')
 
