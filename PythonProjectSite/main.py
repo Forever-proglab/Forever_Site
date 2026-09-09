@@ -63,7 +63,6 @@ def register():
 def index():
     result = None
     error = None
-
     if request.method == 'POST':
         try:
             # Получаем числа из формы
@@ -128,11 +127,10 @@ def login():
         if not gh:
             return render_template('login.html', error='Неправильный(ая) логин или пароль или почта')
         if request.form['password'] == row.password:
+            l = row
             user = User(login)  # Создаем пользователя
             login_user(user)  # Логинем пользователя
             return redirect(url_for('index'))
-        else:
-            return render_template('login.html', error='Неправильный(ая) логин или пароль или почта')
     return render_template('login.html')
 
 
