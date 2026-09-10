@@ -9,7 +9,12 @@
 <body style="background-color:Silver">
     <h1>This is a Heading</h1>
     <p style="color:orange">This is a paragraph</p>
-    <p> {{ u }}</p>
+    {% if current_user.is_authenticated %}
+    <p>Вы вошли как: <strong> {{ current_user.login }}</strong></p>
+        <a href="{{ url_for('logout') }}">Выйти</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">Войти</a>
+    {% endif %}
     <ul>
         <li><a href="/education">My education</a> </li>
         <li><a href="/connect_me">My accounts</a> </li>
