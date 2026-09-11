@@ -25,17 +25,20 @@ app.config.update(
 )
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = "login"
+login_manager.login_view = 'login'
 
 
 class User(UserMixin):
-    def __init__(self, id):
+    def __init__(self, id, username):
         self.id = id
+        self.username = username
 
-
+# В реальности загружайте пользователя из SQLite по ID
 @login_manager.user_loader
-def load_user(login):
-    return User(login)
+def load_user(user_id):
+    # пример: user = db.query(...).filter_by(id=user_id).first()
+    # для демонстрации вернём заглушку
+    return User(user_id, login)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -126,11 +129,9 @@ def login():
             return render_template('login.html', error='Неправильный(ая) логин или пароль или почта')
         if not gh:
             return render_template('login.html', error='Неправильный(ая) логин или пароль или почта')
-        if request.form['password'] == login.password:
-            l =login
-            user = User(login)  # Создаем пользователя
-            login_user(user)  # Логинем пользователя
-            return redirect(url_for('index'))
+        user = User(login, login) # Создаем пользователя
+        login_user(user)  # Логинем пользователя
+        return redirect(url_for('index'))
     return render_template('login.html')
 
 

@@ -10,7 +10,7 @@
     <h1>This is a Heading</h1>
     <p style="color:orange">This is a paragraph</p>
     {% if current_user.is_authenticated %}
-    <p>Вы вошли как: <strong> {{ current_user.login }}</strong></p>
+    <p>Вы вошли как: <strong> {{ current_user.username }}</strong></p>
         <a href="{{ url_for('logout') }}">Выйти</a>
     {% else %}
         <a href="{{ url_for('login') }}">Войти</a>
