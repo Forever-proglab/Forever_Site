@@ -124,13 +124,15 @@ def entertime():
 def login():
     if request.method == 'POST':
         login = db.users.get('login', request.form['login'])
+        username = request.form.get('username')
         gh = db.users.get('password', request.form['password'])
         if not login:
             return render_template('login.html', error='Неправильный(ая) логин или пароль или почта')
         if not gh:
             return render_template('login.html', error='Неправильный(ая) логин или пароль или почта')
-        user = User(login, login) # Создаем пользователя
-        login_user(user)  # Логинем пользователя
+        if request.form['password']==login.password:
+            user = User(login, username) # Создаем пользователя
+            login_user(user)  # Логинем пользователя
         return redirect(url_for('index'))
     return render_template('login.html')
 
