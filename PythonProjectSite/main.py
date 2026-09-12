@@ -118,7 +118,19 @@ def guesstime():
     return render_template('guesstime.html')
 @app.route('/entertime',methods=['GET','POST'])
 def entertime():
-    return render_template('entertime.html')
+    result = None
+    ac=0
+    if request.method == 'POST':
+        # Получаем числа из формы
+        t1 = int(request.form['time'])
+        t2 = int(request.form.get('elapsed'))
+        if t1==t2:
+            result='Угадали'
+        else:
+            result = 'Не угадали'
+        ac = abs(t1-t2)
+        # Проверяем, что введенные значения - числа
+    return render_template('entertime.html', result=result, ac=ac)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

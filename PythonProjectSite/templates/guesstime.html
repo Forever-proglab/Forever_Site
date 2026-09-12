@@ -32,7 +32,7 @@ startBtn.addEventListener('click', () => {
   clearInterval(timerId);
   timerId = setInterval(() => {
     const elapsed = ((performance.now() - startTime)/1000);
-    timeDisplay.textContent = elapsed.toFixed(2);
+    timeDisplay.textContent = elapsed.toFixed(0);
   },);
 });
 

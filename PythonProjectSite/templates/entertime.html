@@ -28,7 +28,7 @@ startBtn.addEventListener('click', () => {
   startTime = performance.now();
   clearInterval(timerId);
   timerId = setInterval(() => {
-    const elapsed = ((performance.now() - startTime)/1000);
+    const elapsed = ((performance.now() - startTime)/1000).toFixed(0);
   },);
 });
 
@@ -40,5 +40,14 @@ clearBtn.addEventListener('click', () => {
   isRunning = false;
 });
     </script>
+<form method="post">
+        <label for="time">Введите время в секундах</label>
+        <input type="number" id="time" name="time" required>
+        <button type="submit">Ввести время</button>
+    {% if result %}
+        <p> {{ result }} </p>
+        <p> Ошибка:{{ ac }} c </p>
+    {% endif %}
+    </form>
 </body>
 </html>
