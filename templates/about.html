@@ -1,0 +1,56 @@
+{% extends 'index.html' %}
+
+{% block head %}
+<link rel="stylesheet" href= "/static/css/about.css">
+<title>Контакты</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="about-section">
+    <h1>Моя семья</h1>
+    <p>Небольшой рассказ о своей семье</p>
+  </div>
+  
+  <h2 style="text-align:center">Члены семьи</h2>
+  <div class="row">
+    <div class="column">
+      <div class="card">
+        <img src="/static/images/baby1.jpg" style="width:100%">
+        <div class="container">
+          <h2>Вася</h2>
+          <p class="title">Братик</p>
+          <p>Описание про Василия</p>
+          <p>jane@example.com</p>
+          <p><button class="button">Связаться</button></p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="column">
+      <div class="card">
+        <img src="/static/images/baby2.jpg" style="width:100%">
+        <div class="container">
+          <h2>Настя</h2>
+          <p class="title">Сестренка</p>
+          <p>Еще одно описание</p>
+          <p>mike@example.com</p>
+          <p><button class="button">Связаться</button></p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="column">
+      <div class="card">
+        <img src="/static/images/baby3.jpg" style="width:100%">
+        <div class="container">
+          <h2>Валера</h2>
+          <p class="title">Братик</p>
+          <p>Описание</p>
+          <p>john@example.com</p>
+          <p><button class="button">Связаться</button></p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

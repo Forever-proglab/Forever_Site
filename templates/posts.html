@@ -1,0 +1,38 @@
+{% extends 'index.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/css/posts.css">
+<title>Посты</title>
+{% endblock %}
+{% block content %}
+
+<div class="header">
+    <h2>Имя блога</h2>
+</div>
+
+<div class="row">
+    <div class="card">
+        <h2>Заголовок</h2>
+        <img src="static/images/happy.jpg" width="250" height="250">
+        <p>Первый пост.</p>
+    </div>
+    <div class="card right">
+        <h2>Заголовок</h2>
+        <img src="static/images/owl.jpg" width="250" height="250">
+        <p>Второй пост.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="card">
+        <h2>Заголовок</h2>
+        <img src="static/images/happy.jpg" width="250" height="250">
+        <p>Третий пост.</p>
+    </div>
+    <div class="card right">
+        <h2>Заголовок</h2>
+        <img src="static/images/owl.jpg" width="250" height="250" />
+        <p> Четвертый пост.</p>
+    </div>
+</div>
+
+{% endblock %}
