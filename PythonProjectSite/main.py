@@ -120,19 +120,24 @@ def guesstime():
 def entertime():
     result = None
     ac, my_var=0, 0
-    data = request.get_json()  # получаем JSON
-    my_var = data.get('t2')
+    t1, t2, t =0,0,0
     if request.method == 'POST':
         # Получаем числа из формы
-        t1 = int(request.form['time'])
-        t2 = int(my_var)
-        if t1==t2:
+        one = int(request.form.get('1'))
+        two = int(request.form.get('2'))
+        if one==1:
+            t1 = time.time()
+        if two==2:
+            t2 = time.time()
+        t3 = t2-t1
+        t = int(request.form.get('time'))
+        if t==t3:
             result='Угадали'
         else:
             result = 'Не угадали'
         ac = abs(t1-t2)
         # Проверяем, что введенные значения - числа
-    return render_template('entertime.html', result=result, ac=ac), jsonify({'status': 'ok'})
+    return render_template('entertime.html', result=result, ac=ac)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

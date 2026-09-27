@@ -11,51 +11,25 @@
         <li><a href="/choosegame">Choose game</a> </li>
   </ul>
 <h1>Игра: замерь время между нажатиями</h1>
-  <button id="start-btn">Старт</button>
-  <button id="stop-btn">Стоп</button>
-  <button id="clear-btn">Сбросить таймер на ноль</button>
-  <button id="sendBtn">Отправить значение прошедшего времени</button>
-<script>
-const startBtn = document.getElementById('start-btn');
-const stopBtn = document.getElementById('stop-btn');
-const clearBtn = document.getElementById('clear-btn');
-const Btn = document.getElementById('sendBth');
+<form action="/entertime" method="POST">
+  <label>1 time</label>
+  <input type="number" name="1" required>
+  <button type="submit">Отправить</button>
 
-let startTime, timerId;
-let isRunning = false;
+</form>
+  <form action="/entertime" method="POST">
+  <label>2 time</label>
+  <input type="number" name="2" required>
+  <button type="submit">Отправить</button>
 
-startBtn.addEventListener('click', () => {
-  if (isRunning) return;
-  isRunning = true;
-  startTime = performance.now();
-  clearInterval(timerId);
-  timerId = setInterval(() => {
-    const elapsed = ((performance.now() - startTime)/1000).toFixed(0);
-  },);
-});
+</form>
+  <form action="/entertime" method="POST">
+  <label>your time</label>
+  <input type="number" name="time" required>
+  <button type="submit">Отправить</button>
+</form>
 
-stopBtn.addEventListener('click', () => {
-  isRunning = false;
-  clearInterval(timerId);
-});
-clearBtn.addEventListener('click', () => {
-  isRunning = false;
-});
-
-  Bth.addEventListener('click', () => {
-    fetch('/entertime', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({t2: elapsed})
-    })
-    .then(res => res.json())
-    .then(data => console.log('Ответ сервера:', data));
-  });
-</script>
-<form method="post">
-        <label for="time">Введите время в секундах</label>
-        <input type="number" id="time" name="time" required>
-        <button type="submit">Ввести время</button>
+    <form>
     {% if result %}
         <p> {{ result }} </p>
         <p> Ошибка:{{ ac }} c </p>
