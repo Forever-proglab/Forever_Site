@@ -116,29 +116,9 @@ def choosegame():
 @app.route('/guesstime')
 def guesstime():
     return render_template('guesstime.html')
-@app.route('/entertime',methods=['GET','POST'])
-def entertime():
-    result = None
-    ac, my_var=0, 0
-    t1, t2, t =0,0,0
-    if request.method == 'POST':
-        # Получаем числа из формы
-        one = int(request.form.get('1'))
-        two = int(request.form.get('2'))
-        if one==1:
-            t1 = time.time()
-        if two==2:
-            t2 = time.time()
-        t3 = t2-t1
-        t = int(request.form.get('time'))
-        if t==t3:
-            result='Угадали'
-        else:
-            result = 'Не угадали'
-        ac = abs(t1-t2)
-        # Проверяем, что введенные значения - числа
-    return render_template('entertime.html', result=result, ac=ac)
-
+@app.route('/guess_time_game')
+def guess_time():
+    return render_template('guess_time_game.html')
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
