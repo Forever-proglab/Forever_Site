@@ -12,28 +12,24 @@
   </ul>
 <h1>Игра: замерь время между нажатиями</h1>
 <form action="/entertime" method="POST">
-  <label>1 time</label>
-  <input type="number" name="1" required>
-  <button type="submit">Отправить</button>
-
+  <label for="1">Наименьшее число:</label>
+        <input type="number" id="1" name="1" required>
+    <button type="submit">Создать_число</button>
+</form>
+<form action="/entertime" method="POST">
+  <label for="2">Наименьшее число:</label>
+        <input type="number" id="2" name="2" required>
+    <button type="submit">Создать_число</button>
 </form>
   <form action="/entertime" method="POST">
-  <label>2 time</label>
-  <input type="number" name="2" required>
-  <button type="submit">Отправить</button>
-
-</form>
-  <form action="/entertime" method="POST">
-  <label>your time</label>
-  <input type="number" name="time" required>
-  <button type="submit">Отправить</button>
+  <label for="time">Наименьшее число:</label>
+        <input type="number" id="time" name="time" required>
+      <button type="submit">Создать_число</button>
 </form>
 
-    <form>
     {% if result %}
         <p> {{ result }} </p>
         <p> Ошибка:{{ ac }} c </p>
     {% endif %}
-    </form>
 </body>
 </html>
