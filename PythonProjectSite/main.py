@@ -57,7 +57,7 @@ def register():
         data = dict(request.form)
         data.pop('password_check')
         db.users.put(data=data)
-        return render_template('register.html', message='Регистрация прошла успешно')
+        return redirect(url_for('index'))
     return render_template('register.html')
 
 
