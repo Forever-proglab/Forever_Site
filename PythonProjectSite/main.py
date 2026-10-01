@@ -128,9 +128,9 @@ def login():
         username = request.form.get('username')
         gh = db.users.get('password', request.form['password'])
         if not login:
-            return render_template('login.html', error='Неправильный(ая) логин или пароль или почта')
+            return render_template('login.html', error='Неправильный(ая) логин или пароль')
         if not gh:
-            return render_template('login.html', error='Неправильный(ая) логин или пароль или почта')
+            return render_template('login.html', error='Неправильный(ая) логин или пароль')
         if request.form['password']==login.password:
             user = User(login, username) # Создаем пользователя
             login_user(user)  # Логинем пользователя

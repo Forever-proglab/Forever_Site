@@ -20,6 +20,10 @@
         <input type="password" id="password_check" name="password_check" required>
         <button type="submit">Зарегистрироваться</button>
     </form>
+    {% if message %}
+        <p>{{message}}</p>
+    {% endif %}
     <p>----------------------------------------------------------------</p>
+
 </body>
 </html>
