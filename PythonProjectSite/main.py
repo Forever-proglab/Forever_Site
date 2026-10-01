@@ -61,6 +61,7 @@ def register():
     return render_template('register.html')
 
 
+
 @app.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
