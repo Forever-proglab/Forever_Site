@@ -1,4 +1,4 @@
-import random, sys
+import random
 from kodland_db import db
 import time
 import re
@@ -63,21 +63,57 @@ def register():
 
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-    return render_template('index.html')
+    result = None
+    error = None
+    if request.method == 'POST':
+        try:
+            # Получаем числа из формы
+            min = float(request.form['min_number'])
+            max = float(request.form['max_number'])
+            n = int(request.form['n'])
+
+            # Проверяем, что введенные значения - числа
+
+            result = round((random.uniform(min, max)), n)
+        except KeyError:
+            error = "Произошла ошибка при получении данных формы."
+        except ValueError:
+            error = "Произошла ошибка при преобразовании чисел, -18 меньше, чем -12, 6 меньше, чем 28."
+
+    return render_template('index.html', random_number=result, error=error)
 @app.route('/connect_me')
 def connect():
     return render_template('connect_me.html')
 @app.route('/documents')
 def documents():
     return render_template('documents.html')
+# @app.route('/login')
+# def login():
+#     return render_template('login.html')
+# @app.route('/register')
+# def register():
+#     return render_template('register.html')
 @app.route('/education')
 def education():
     return render_template('education.html')
-@app.route('/choosegame')
+@app.route('/choosegame', methods=['GET', 'POST'])
 def choosegame():
+    # t4 = None
+    # if request.method == 'POST':
+    #     s = int(request.form['s'])
+    #     if s == 1:
+    #         t1 = s
+    #     else:
+    #         t1 = 0
+    #     s1 = int(request.form['s1'])
+    #     if s1 == 1:
+    #         t2 = s1
+    #     else:
+    #         t2 = 0
+    #     t4 = t2-t1
     return render_template('choosegame.html')
 @app.route('/guesstime')
 def guesstime():
@@ -107,6 +143,5 @@ def login():
 def logout():
      logout_user()
      return 'Пока'
-print(sys.version)
 if __name__ == "__main__":
     app.run(debug=True)
