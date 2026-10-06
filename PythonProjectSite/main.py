@@ -18,7 +18,7 @@ def check_password(plain_text_password, hashed_password):
     return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_password)
 
 app = Flask(__name__)
-
+us=''
 
 app.config.update(
     SECRET_KEY='WOW SUCH SECRET'
@@ -26,7 +26,24 @@ app.config.update(
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
-
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    global us
+    username = ''
+    if request.method == 'POST':
+        login = db.users.get('login', request.form['login'])
+        username = request.form['login']
+        gh = db.users.get('password', request.form['password'])
+        if not login:
+            return render_template('login.html', error='Неправильный(ая) логин или пароль')
+        if not gh:
+            return render_template('login.html', error='Неправильный(ая) логин или пароль')
+        elif request.form['password']==login.password:
+            user = User(login, username) # Создаем пользователя
+            login_user(user)  # Логинем пользователя
+        return redirect(url_for('index'))
+    us = username
+    return render_template('login.html')
 
 class User(UserMixin):
     def __init__(self, id, username):
@@ -36,11 +53,9 @@ class User(UserMixin):
 # В реальности загружайте пользователя из SQLite по ID
 @login_manager.user_loader
 def load_user(user_id):
-    # пример: user = db.query(...).filter_by(id=user_id).first()
+    user = db.users.filter_by(id=user_id).first()
     # для демонстрации вернём заглушку
     return User(user_id, login)
-
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -62,12 +77,12 @@ def register():
 
 
 
-
 @app.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
     result = None
     error = None
+    t = ''
     if request.method == 'POST':
         try:
             # Получаем числа из формы
@@ -78,12 +93,13 @@ def index():
             # Проверяем, что введенные значения - числа
 
             result = round((random.uniform(min, max)), n)
+            t = us
         except KeyError:
             error = "Произошла ошибка при получении данных формы."
         except ValueError:
             error = "Произошла ошибка при преобразовании чисел, -18 меньше, чем -12, 6 меньше, чем 28."
 
-    return render_template('index.html', random_number=result, error=error)
+    return render_template('index.html', random_number=result, error=error, username=t)
 @app.route('/connect_me')
 def connect():
     return render_template('connect_me.html')
@@ -121,23 +137,6 @@ def guesstime():
 @app.route('/guess_time_game')
 def guess_time():
     return render_template('guess_time_game.html')
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        login = db.users.get('login', request.form['login'])
-        username = request.form.get('login')
-        gh = db.users.get('password', request.form['password'])
-        if not login:
-            return render_template('login.html', error='Неправильный(ая) логин или пароль')
-        if not gh:
-            return render_template('login.html', error='Неправильный(ая) логин или пароль')
-        elif request.form['password']==login.password:
-            user = User(login, username) # Создаем пользователя
-            login_user(user)  # Логинем пользователя
-        return redirect(url_for('index'))
-    return render_template('login.html')
-
-
 @app.route("/logout")
 @login_required
 def logout():

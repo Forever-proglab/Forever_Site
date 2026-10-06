@@ -9,17 +9,12 @@
 <body style="background-color:Silver">
     <h1>This is a Heading</h1>
     <p style="color:orange">This is a paragraph</p>
-    {% if current_user.is_authenticated %}
-    <p>Вы вошли как: {{ username }}</p>
-        <a href="{{ url_for('logout') }}">Выйти</a>
-    {% else %}
-        <a href="{{ url_for('login') }}">Войти</a>
-    {% endif %}
     <ul>
         <li><a href="/education">My education</a> </li>
         <li><a href="/connect_me">My accounts</a> </li>
         <li><a href="/documents">Documents</a> </li>
         <li><a href="/choosegame">Choose game</a> </li>
+        <li><a href="/logout">Выйти</a> </li>
     </ul>
     <p>-------Программа_для_создания_случайного_числа------------------</p>
     <form method="post">
@@ -37,6 +32,10 @@
         <p>Ваше случайное число: {{ random_number }}</p>
     {% elif error %}
         <p style="color: red;">Ошибка: {{ error }}</p>
+    {% endif %}
+
+    {% if username %}
+        <p>{{username}}</p>
     {% endif %}
 </body>
 </html>
