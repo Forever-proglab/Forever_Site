@@ -1,0 +1,147 @@
+import random
+from kodland_db import db
+import time
+import re
+import bcrypt
+from random import randint
+from datetime import datetime, timedelta
+from flask import Flask, render_template, request, url_for, redirect, jsonify
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
+from flask_register import *
+from sqlalchemy import *
+
+def hashed_password(plain_text_password):
+    return bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+
+
+def check_password(plain_text_password, hashed_password):
+    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_password)
+
+app = Flask(__name__)
+
+
+app.config.update(
+    SECRET_KEY='WOW SUCH SECRET'
+)
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+
+class User(UserMixin):
+    def __init__(self, id, username):
+        self.id = id
+        self.username = username
+
+# В реальности загружайте пользователя из SQLite по ID
+@login_manager.user_loader
+def load_user(user_id):
+    # пример: user = db.query(...).filter_by(id=user_id).first()
+    # для демонстрации вернём заглушку
+    return User(user_id, login)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        for key in request.form:
+            if request.form[key] == '':
+                return render_template('register.html', message='Все поля должны быть заполнены!')
+
+        row = db.users.get('login', request.form['login'])
+        if row:
+            return render_template('register.html', message='Такой пользователь уже существует!')
+
+        if request.form['password'] != request.form['password_check']:
+            return render_template('register.html', message='Пароли не совпадают')
+        data = dict(request.form)
+        data.pop('password_check')
+        db.users.put(data=data)
+        return redirect(url_for('index'))
+    return render_template('register.html')
+
+
+
+
+@app.route('/', methods=['GET', 'POST'])
+@login_required
+def index():
+    result = None
+    error = None
+    if request.method == 'POST':
+        try:
+            # Получаем числа из формы
+            min = float(request.form['min_number'])
+            max = float(request.form['max_number'])
+            n = int(request.form['n'])
+
+            # Проверяем, что введенные значения - числа
+
+            result = round((random.uniform(min, max)), n)
+        except KeyError:
+            error = "Произошла ошибка при получении данных формы."
+        except ValueError:
+            error = "Произошла ошибка при преобразовании чисел, -18 меньше, чем -12, 6 меньше, чем 28."
+
+    return render_template('index.html', random_number=result, error=error)
+@app.route('/connect_me')
+def connect():
+    return render_template('connect_me.html')
+@app.route('/documents')
+def documents():
+    return render_template('documents.html')
+# @app.route('/login')
+# def login():
+#     return render_template('login.html')
+# @app.route('/register')
+# def register():
+#     return render_template('register.html')
+@app.route('/education')
+def education():
+    return render_template('education.html')
+@app.route('/choosegame', methods=['GET', 'POST'])
+def choosegame():
+    # t4 = None
+    # if request.method == 'POST':
+    #     s = int(request.form['s'])
+    #     if s == 1:
+    #         t1 = s
+    #     else:
+    #         t1 = 0
+    #     s1 = int(request.form['s1'])
+    #     if s1 == 1:
+    #         t2 = s1
+    #     else:
+    #         t2 = 0
+    #     t4 = t2-t1
+    return render_template('choosegame.html')
+@app.route('/guesstime')
+def guesstime():
+    return render_template('guesstime.html')
+@app.route('/guess_time_game')
+def guess_time():
+    return render_template('guess_time_game.html')
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        login = db.users.get('login', request.form['login'])
+        username = request.form.get('login')
+        gh = db.users.get('password', request.form['password'])
+        if not login:
+            return render_template('login.html', error='Неправильный(ая) логин или пароль')
+        if not gh:
+            return render_template('login.html', error='Неправильный(ая) логин или пароль')
+        elif request.form['password']==login.password:
+            user = User(login, username) # Создаем пользователя
+            login_user(user)  # Логинем пользователя
+        return redirect(url_for('index'))
+    return render_template('login.html')
+
+
+@app.route("/logout")
+@login_required
+def logout():
+     logout_user()
+     return 'Пока'
+if __name__ == "__main__":
+    app.run(debug=True)
