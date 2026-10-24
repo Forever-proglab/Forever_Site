@@ -29,16 +29,16 @@ login_manager.login_view = 'login'
 
 
 class User(UserMixin):
-    def __init__(self, id, username):
-        self.id = id
-        self.username = username
+    def __init__(self, login):
+        self.id = login
+        self.username = login
 
 # В реальности загружайте пользователя из SQLite по ID
 @login_manager.user_loader
-def load_user(user_id):
+def load_user():
     # пример: user = db.query(...).filter_by(id=user_id).first()
     # для демонстрации вернём заглушку
-    return User(user_id, login)
+    return User(login)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -123,20 +123,15 @@ def guess_time():
     return render_template('guess_time_game.html')
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    global user
     if request.method == 'POST':
-        login = db.users.get('login', request.form['login'])
-        username = request.form.get('login')
-        gh = db.users.get('password', request.form['password'])
-        if not login:
-            return render_template('login.html', error='Неправильный(ая) логин или пароль')
-        if not gh:
-            return render_template('login.html', error='Неправильный(ая) логин или пароль')
-        elif request.form['password']==login.password:
-            user = User(login, username) # Создаем пользователя
+        login = request.form['login']
+        gh = request.form['password']
+        if gh == db.users.get('login', gh):
+            user = User(login) # Создаем пользователя
             login_user(user)  # Логинем пользователя
         return redirect(url_for('index'))
     return render_template('login.html')
-
 
 @app.route("/logout")
 @login_required
