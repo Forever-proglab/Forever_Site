@@ -35,7 +35,7 @@ class User(UserMixin):
 
 # В реальности загружайте пользователя из SQLite по ID
 @login_manager.user_loader
-def load_user():
+def load_user(login):
     # пример: user = db.query(...).filter_by(id=user_id).first()
     # для демонстрации вернём заглушку
     return User(login)
@@ -125,9 +125,9 @@ def guess_time():
 def login():
     global user
     if request.method == 'POST':
-        login = request.form['login']
-        gh = request.form['password']
-        if gh == db.users.get('login', gh):
+        login = request.form.get('login')
+        gh = request.form.get('password')
+        if gh == login.str(gh):
             user = User(login) # Создаем пользователя
             login_user(user)  # Логинем пользователя
         return redirect(url_for('index'))
